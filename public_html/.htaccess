@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+
+# Protect hidden files
+RewriteRule ^\. - [F,L]
+
+# Redirect all requests to index.php if not a file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
