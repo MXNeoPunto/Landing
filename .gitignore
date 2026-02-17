@@ -1,0 +1,7 @@
+vendor/
+private/vendor/
+.env
+*.log
+*.png
+__pycache__/
+verify_frontend.py
