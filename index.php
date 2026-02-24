@@ -108,19 +108,61 @@
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex items-center justify-center md:hidden">
-            <div class="flex flex-col space-y-8 text-center">
-                <a href="#inicio" class="text-3xl font-bold text-slate-900 hover:text-neoBlue mobile-link transition-colors">Inicio</a>
-                <a href="#servicios" class="text-3xl font-bold text-slate-900 hover:text-neoBlue mobile-link transition-colors">Servicios</a>
-                <a href="#usos" class="text-3xl font-bold text-slate-900 hover:text-neoBlue mobile-link transition-colors">Usos</a>
-                <a href="#acerca" class="text-3xl font-bold text-slate-900 hover:text-neoBlue mobile-link transition-colors">Acerca de</a>
-                <a href="#contacto" class="px-8 py-3 bg-neoBlue text-white rounded-full font-bold text-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 mobile-link">
-                    Contáctanos
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+
+        <div class="min-h-screen flex flex-col px-8 pb-8 pt-28">
+
+            <!-- Navigation Links -->
+            <nav class="flex-1 flex flex-col justify-start space-y-6">
+                <a href="#inicio" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                    <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-house"></i>
+                    </span>
+                    Inicio
                 </a>
+                <a href="#servicios" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                    <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </span>
+                    Servicios
+                </a>
+                <a href="#usos" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                    <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </span>
+                    Usos
+                </a>
+                <a href="#acerca" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                    <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-users"></i>
+                    </span>
+                    Acerca de
+                </a>
+            </nav>
+
+            <!-- CTA & Footer -->
+            <div class="mt-8 pt-8 border-t border-slate-100">
+                <a href="#contacto" class="block w-full py-4 bg-neoBlue text-white text-center rounded-xl font-bold text-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 mobile-link mb-8">
+                    Contáctanos <i class="fa-solid fa-paper-plane ml-2"></i>
+                </a>
+
+                <div class="flex justify-center gap-6 text-slate-400">
+                    <a href="#" class="hover:text-neoBlue transition-colors"><i class="fa-brands fa-facebook-f text-xl"></i></a>
+                    <a href="#" class="hover:text-neoBlue transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="#" class="hover:text-neoBlue transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                </div>
+                <p class="text-center text-slate-400 text-sm mt-4">
+                    &copy; <?php echo date('Y'); ?> NeoPunto.
+                </p>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Hero Section -->
     <section id="inicio" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
