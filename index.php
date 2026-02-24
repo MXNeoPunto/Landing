@@ -41,9 +41,9 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
         .glass-header {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .text-glow {
             text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
@@ -70,18 +70,20 @@
     <header class="fixed w-full top-0 z-50 glass-header transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="text-2xl font-bold tracking-wider flex items-center gap-2">
+            <a href="#" class="text-2xl font-bold flex items-center gap-2">
                 <span class="text-neoBlue"><i class="fa-solid fa-code"></i></span>
-                <span class="text-white">Neo</span><span class="text-neoYellow">Punto</span>
+                <div>
+                    <span class="text-white">Neo</span><span class="text-neoYellow">Punto</span>
+                </div>
             </a>
 
             <!-- Desktop Menu -->
-            <nav class="hidden md:flex gap-8 text-sm font-medium">
+            <nav class="hidden md:flex gap-8 text-base font-medium">
                 <a href="#inicio" class="hover:text-neoBlue transition-colors">Inicio</a>
                 <a href="#servicios" class="hover:text-neoBlue transition-colors">Servicios</a>
                 <a href="#usos" class="hover:text-neoBlue transition-colors">Usos</a>
                 <a href="#acerca" class="hover:text-neoBlue transition-colors">Acerca de</a>
-                <a href="#contacto" class="px-4 py-2 bg-neoBlue text-white rounded-full hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30">
+                <a href="#contacto" class="px-6 py-2.5 bg-neoBlue text-white rounded-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30">
                     Contáctanos
                 </a>
             </nav>
@@ -93,7 +95,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass absolute w-full left-0 top-full border-t border-gray-700">
+        <div id="mobile-menu" class="hidden md:hidden glass-header absolute w-full left-0 top-full border-t border-gray-700">
             <div class="flex flex-col p-6 space-y-4 text-center">
                 <a href="#inicio" class="block hover:text-neoYellow mobile-link">Inicio</a>
                 <a href="#servicios" class="block hover:text-neoYellow mobile-link">Servicios</a>
