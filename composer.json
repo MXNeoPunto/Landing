@@ -1,0 +1,14 @@
+{
+    "name": "neopunto/landing",
+    "description": "Landing page for NeoPunto",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "authors": [
+        {
+            "name": "NeoPunto",
+            "email": "admin@neopunto.com"
+        }
+    ]
+}
