@@ -5,21 +5,13 @@
         <!-- Background Decor -->
         <div class="absolute inset-0 -z-10 h-full w-full bg-appleGray">
             <div class="absolute left-10 top-20 -z-10 h-[400px] w-[400px] rounded-full bg-neoBlue opacity-10 blur-[120px]"></div>
-            <div class="absolute right-10 bottom-20 -z-10 h-[400px] w-[400px] rounded-full bg-neoYellow opacity-10 blur-[120px]"></div>
+            <div class="absolute right-10 bottom-20 -z-10 h-[400px] w-[400px] rounded-full bg-slate-400 opacity-10 blur-[120px]"></div>
         </div>
 
         <div class="container mx-auto px-6 text-center z-10" data-aos="fade-up">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md text-neoBlue text-sm font-semibold mb-8 border border-slate-200/50 shadow-sm animate-fade-in-down">
-                <span class="relative flex h-3 w-3">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neoBlue opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3 bg-neoBlue"></span>
-                </span>
-                Innovación en Desarrollo
-            </div>
-
             <h1 class="text-5xl md:text-8xl font-black mb-8 leading-tight text-appleBlack tracking-tight">
                 Creamos el <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-neoBlue to-neoYellow">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-neoBlue to-blue-800">
                     Futuro Digital
                 </span>
             </h1>
@@ -29,11 +21,11 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="#servicios" class="group px-8 py-4 bg-neoBlue text-white rounded-full font-bold text-lg hover:bg-blue-600 transition-all shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-1 flex items-center gap-3">
+                <a href="#servicios" class="group px-8 py-4 bg-neoBlue text-white rounded-full font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-1 flex items-center gap-3">
                     Explorar Servicios <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="#contacto" class="group px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-full font-bold text-lg hover:bg-slate-50 transition-all shadow-sm hover:shadow-md hover:-translate-y-1 flex items-center gap-3">
-                    <i class="fa-brands fa-whatsapp text-green-500 text-xl"></i> Cotizar Proyecto
+                <a href="#contacto" class="group px-8 py-4 bg-white text-appleBlack border border-slate-300 rounded-full font-bold text-lg hover:bg-slate-50 transition-all shadow-sm hover:shadow-md hover:-translate-y-1 flex items-center gap-3">
+                    <i class="fa-brands fa-whatsapp text-appleBlack text-xl"></i> Cotizar Proyecto
                 </a>
             </div>
         </div>
