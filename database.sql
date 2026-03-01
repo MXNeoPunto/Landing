@@ -1,0 +1,22 @@
+CREATE DATABASE IF NOT EXISTS neopunto;
+USE neopunto;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    telefono VARCHAR(20) NOT NULL,
+    pais VARCHAR(100) NOT NULL,
+    moneda VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('cliente', 'admin') DEFAULT 'cliente',
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(6) NOT NULL,
+    expira DATETIME NOT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

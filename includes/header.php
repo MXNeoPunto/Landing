@@ -1,3 +1,10 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$is_logged_in = isset($_SESSION['user_id']);
+$user_role = $_SESSION['rol'] ?? 'cliente';
+?>
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -26,7 +33,6 @@
                         appleBlack: '#1d1d1f',
                         appleGray: '#f5f5f7',
                         neoBlue: '#0066cc',
-                        neoYellow: '#f59e0b',
                         neoDark: '#f8fafc',
                         neoGlass: 'rgba(255, 255, 255, 0.7)',
                     },
@@ -69,7 +75,7 @@
             border-radius: 5px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #f59e0b;
+            background: #1d4ed8;
         }
     </style>
 </head>
@@ -84,7 +90,7 @@
             </a>
 
             <!-- Desktop Menu -->
-            <nav class="hidden md:flex items-center gap-8 text-base font-medium text-slate-700">
+            <nav class="hidden md:flex items-center gap-6 text-base font-medium text-slate-700">
                 <a href="index.php#inicio" class="hover:text-neoBlue transition-colors relative group">
                     Inicio
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-neoBlue transition-all duration-300 group-hover:w-full"></span>
@@ -101,9 +107,25 @@
                     Acerca de
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-neoBlue transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="index.php#contacto" class="px-6 py-2.5 bg-neoBlue text-white rounded-full hover:bg-blue-600 hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/30 font-medium">
-                    Contáctanos
-                </a>
+
+                <div class="h-6 w-px bg-slate-200 mx-2"></div>
+
+                <?php if ($is_logged_in): ?>
+                    <?php $panel_link = $user_role === 'admin' ? 'panel/admin.php' : 'panel/cliente.php'; ?>
+                    <a href="<?php echo htmlspecialchars($panel_link); ?>" class="hover:text-neoBlue transition-colors relative group">
+                        <i class="fa-solid fa-user-circle mr-1"></i> Mi Panel
+                    </a>
+                    <a href="auth/logout.php" class="px-5 py-2 text-red-500 hover:text-red-700 font-medium transition-colors">
+                        Salir
+                    </a>
+                <?php else: ?>
+                    <a href="auth/login.php" class="hover:text-neoBlue transition-colors relative group">
+                        Iniciar Sesión
+                    </a>
+                    <a href="auth/registro.php" class="px-6 py-2.5 bg-neoBlue text-white rounded-full hover:bg-blue-600 hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/30 font-medium">
+                        Crear Cuenta
+                    </a>
+                <?php endif; ?>
             </nav>
 
             <!-- Mobile Menu Button (Hamburger) -->
@@ -113,50 +135,74 @@
                 <span class="w-6 h-0.5 bg-slate-900 rounded-full transition-all duration-300 origin-center hamburger-line"></span>
             </button>
         </div>
-
     </header>
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
         <!-- Decorative Background Elements -->
         <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
         <div class="min-h-screen flex flex-col px-8 pb-8 pt-28">
 
             <!-- Navigation Links -->
-            <nav class="flex-1 flex flex-col justify-start space-y-6">
-                <a href="index.php#inicio" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+            <nav class="flex-1 flex flex-col justify-start space-y-4">
+                <a href="index.php#inicio" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
                     <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
                         <i class="fa-solid fa-house"></i>
                     </span>
                     Inicio
                 </a>
-                <a href="index.php#servicios" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                <a href="index.php#servicios" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
                     <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
                         <i class="fa-solid fa-briefcase"></i>
                     </span>
                     Servicios
                 </a>
-                <a href="index.php#usos" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                <a href="index.php#usos" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
                     <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
                         <i class="fa-solid fa-layer-group"></i>
                     </span>
                     Usos
                 </a>
-                <a href="index.php#acerca" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-4 rounded-xl hover:bg-blue-50">
+                <a href="index.php#acerca" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
                     <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
                         <i class="fa-solid fa-users"></i>
                     </span>
                     Acerca de
                 </a>
+
+                <div class="w-full h-px bg-slate-200 my-2"></div>
+
+                <?php if ($is_logged_in): ?>
+                    <?php $panel_link = $user_role === 'admin' ? 'panel/admin.php' : 'panel/cliente.php'; ?>
+                    <a href="<?php echo htmlspecialchars($panel_link); ?>" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </span>
+                        Mi Panel
+                    </a>
+                <?php else: ?>
+                    <a href="auth/login.php" class="group flex items-center gap-4 text-xl font-bold text-slate-800 hover:text-neoBlue mobile-link transition-colors p-3 rounded-xl hover:bg-blue-50">
+                        <span class="w-10 h-10 rounded-lg bg-blue-100 text-neoBlue flex items-center justify-center text-lg group-hover:bg-neoBlue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                        </span>
+                        Iniciar Sesión
+                    </a>
+                <?php endif; ?>
             </nav>
 
             <!-- CTA & Footer -->
-            <div class="mt-8 pt-8 border-t border-slate-100">
-                <a href="index.php#contacto" class="block w-full py-4 bg-neoBlue text-white text-center rounded-xl font-bold text-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 mobile-link mb-8">
-                    Contáctanos <i class="fa-solid fa-paper-plane ml-2"></i>
-                </a>
+            <div class="mt-8 pt-6 border-t border-slate-100">
+                <?php if ($is_logged_in): ?>
+                    <a href="auth/logout.php" class="block w-full py-4 bg-red-50 text-red-500 border border-red-200 text-center rounded-xl font-bold text-lg hover:bg-red-100 transition-all mobile-link mb-6">
+                        Cerrar Sesión <i class="fa-solid fa-arrow-right-from-bracket ml-2"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="auth/registro.php" class="block w-full py-4 bg-neoBlue text-white text-center rounded-xl font-bold text-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30 mobile-link mb-6">
+                        Crear Cuenta <i class="fa-solid fa-user-plus ml-2"></i>
+                    </a>
+                <?php endif; ?>
 
                 <div class="flex justify-center gap-6 text-slate-400">
                     <a href="#" class="hover:text-neoBlue transition-colors"><i class="fa-brands fa-facebook-f text-xl"></i></a>
