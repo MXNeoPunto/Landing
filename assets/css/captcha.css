@@ -1,0 +1,75 @@
+.captcha-slider-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: #f1f5f9;
+    border-radius: 25px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    user-select: none;
+    margin-bottom: 1rem;
+}
+
+.captcha-slider-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #3b82f6; /* Tailwind blue-500 */
+    border-radius: 25px 0 0 25px;
+    z-index: 1;
+}
+
+.captcha-slider-handle {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.captcha-slider-handle:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.captcha-slider-handle i {
+    color: #64748b; /* Tailwind slate-500 */
+    font-size: 1.2rem;
+}
+
+.captcha-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #64748b; /* Tailwind slate-500 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.captcha-slider-track.verified {
+    background-color: #22c55e; /* Tailwind green-500 */
+    border-radius: 25px;
+}
+
+.captcha-slider-handle.verified i::before {
+    content: "\f00c"; /* FontAwesome check icon */
+    color: #22c55e;
+}
