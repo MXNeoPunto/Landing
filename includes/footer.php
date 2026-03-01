@@ -30,10 +30,16 @@
                     <p class="text-slate-500 text-sm leading-relaxed mb-6">
                         Innovación digital para empresas visionarias. Transformamos el futuro con código y diseño de alto nivel.
                     </p>
-                    <div class="flex gap-4">
+                    <div class="flex flex-wrap gap-4 mb-6">
                         <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:bg-neoBlue hover:text-white transition-all text-slate-400 hover:-translate-y-1 shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:bg-neoBlue hover:text-white transition-all text-slate-400 hover:-translate-y-1 shadow-sm"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:bg-neoBlue hover:text-white transition-all text-slate-400 hover:-translate-y-1 shadow-sm"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                    <div>
+                        <a href="https://play.google.com/store/apps/dev?id=4808815510351032687" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-appleBlack rounded-xl hover:bg-slate-50 transition-all shadow-sm border border-slate-200 text-sm font-medium hover:-translate-y-1 group">
+                            <i class="fa-brands fa-google-play text-neoBlue group-hover:scale-110 transition-transform"></i>
+                            Ver Proyectos en Play Store
+                        </a>
                     </div>
                 </div>
 
