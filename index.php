@@ -3,21 +3,21 @@
     <!-- Hero Section -->
     <section id="inicio" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         <!-- Background Decor -->
-        <div class="absolute inset-0 -z-10 h-full w-full bg-slate-50 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-            <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-500 opacity-20 blur-[100px]"></div>
-            <div class="absolute right-0 bottom-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-amber-500 opacity-20 blur-[100px]"></div>
+        <div class="absolute inset-0 -z-10 h-full w-full bg-appleGray">
+            <div class="absolute left-10 top-20 -z-10 h-[400px] w-[400px] rounded-full bg-neoBlue opacity-10 blur-[120px]"></div>
+            <div class="absolute right-10 bottom-20 -z-10 h-[400px] w-[400px] rounded-full bg-neoYellow opacity-10 blur-[120px]"></div>
         </div>
 
         <div class="container mx-auto px-6 text-center z-10" data-aos="fade-up">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-neoBlue text-sm font-semibold mb-8 border border-slate-200 shadow-sm animate-fade-in-down">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md text-neoBlue text-sm font-semibold mb-8 border border-slate-200/50 shadow-sm animate-fade-in-down">
                 <span class="relative flex h-3 w-3">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neoBlue opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-3 w-3 bg-neoBlue"></span>
                 </span>
                 Innovación en Desarrollo
             </div>
 
-            <h1 class="text-5xl md:text-8xl font-black mb-8 leading-tight text-slate-900 tracking-tight">
+            <h1 class="text-5xl md:text-8xl font-black mb-8 leading-tight text-appleBlack tracking-tight">
                 Creamos el <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-neoBlue to-neoYellow">
                     Futuro Digital
@@ -44,7 +44,7 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-20" data-aos="fade-up">
                 <span class="text-neoBlue font-bold tracking-wider uppercase text-sm">Nuestras Soluciones</span>
-                <h2 class="text-4xl md:text-5xl font-black mt-2 text-slate-900">
+                <h2 class="text-4xl md:text-5xl font-black mt-2 text-appleBlack">
                     Servicios <span class="text-neoYellow">Premium</span>
                 </h2>
                 <p class="text-slate-500 max-w-2xl mx-auto mt-4 text-lg">
@@ -58,7 +58,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoBlue mb-6 group-hover:bg-neoBlue group-hover:text-white transition-colors duration-300">
                         <i class="fa-solid fa-laptop-code"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Diseño Web Moderno</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">Diseño Web Moderno</h3>
                     <p class="text-slate-500 leading-relaxed">Sitios web responsivos, ultra modernos con animaciones fluidas y diseño adaptable a todos los dispositivos.</p>
                 </div>
 
@@ -67,7 +67,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoYellow mb-6 group-hover:bg-neoYellow group-hover:text-white transition-colors duration-300">
                         <i class="fa-solid fa-mobile-screen-button"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Apps de Radio</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">Apps de Radio</h3>
                     <p class="text-slate-500 leading-relaxed">Aplicaciones móviles dedicadas para estaciones de radio con streaming de alta calidad y diseño personalizado.</p>
                 </div>
 
@@ -76,7 +76,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoBlue mb-6 group-hover:bg-neoBlue group-hover:text-white transition-colors duration-300">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Servicios de Paquetería</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">Servicios de Paquetería</h3>
                     <p class="text-slate-500 leading-relaxed">Soluciones tecnológicas para el rastreo y gestión de envíos de paquetería.</p>
                 </div>
 
@@ -85,7 +85,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoYellow mb-6 group-hover:bg-neoYellow group-hover:text-white transition-colors duration-300">
                         <i class="fa-solid fa-store"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Tiendas en Línea</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">Tiendas en Línea</h3>
                     <p class="text-slate-500 leading-relaxed">E-commerce robustos con carritos de compra, inventario y gestión de pedidos.</p>
                 </div>
 
@@ -94,7 +94,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoBlue mb-6 group-hover:bg-neoBlue group-hover:text-white transition-colors duration-300">
                         <i class="fa-brands fa-wordpress"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">WordPress</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">WordPress</h3>
                     <p class="text-slate-500 leading-relaxed">Implementación y personalización avanzada de sitios WordPress optimizados y seguros.</p>
                 </div>
 
@@ -103,7 +103,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl text-neoYellow mb-6 group-hover:bg-neoYellow group-hover:text-white transition-colors duration-300">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Seguridad Web</h3>
+                    <h3 class="text-2xl font-bold mb-4 text-appleBlack">Seguridad Web</h3>
                     <p class="text-slate-500 leading-relaxed">Protección contra ataques, certificados SSL y copias de seguridad automáticas.</p>
                 </div>
 
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="w-full md:w-1/2" data-aos="fade-left">
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-slate-900">Sobre <span class="text-neoBlue">NeoPunto</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-appleBlack">Sobre <span class="text-neoBlue">NeoPunto</span></h2>
                 <p class="text-slate-600 mb-6 text-lg leading-relaxed">
                     Somos una agencia digital enfocada en el futuro. Nuestra misión es empoderar negocios en Guatemala y el mundo con herramientas tecnológicas de vanguardia.
                 </p>
@@ -162,7 +162,7 @@
 
                 <div class="text-center mb-12">
                     <span class="text-neoBlue font-bold tracking-wider uppercase text-sm">Empecemos Ahora</span>
-                    <h2 class="text-3xl md:text-5xl font-black mt-2 mb-4 text-slate-900">Contáctanos</h2>
+                    <h2 class="text-3xl md:text-5xl font-black mt-2 mb-4 text-appleBlack">Contáctanos</h2>
                     <p class="text-slate-500 text-lg">¿Listo para iniciar tu próximo proyecto? Escríbenos.</p>
                 </div>
 
@@ -170,16 +170,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Nombre</label>
-                            <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-slate-900 placeholder-slate-400 font-medium" placeholder="Tu nombre">
+                            <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-appleBlack placeholder-slate-400 font-medium" placeholder="Tu nombre">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Email</label>
-                            <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-slate-900 placeholder-slate-400 font-medium" placeholder="tucorreo@ejemplo.com">
+                            <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-appleBlack placeholder-slate-400 font-medium" placeholder="tucorreo@ejemplo.com">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Mensaje</label>
-                        <textarea name="message" rows="4" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-slate-900 placeholder-slate-400 font-medium" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                        <textarea name="message" rows="4" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:bg-white focus:border-neoBlue focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-appleBlack placeholder-slate-400 font-medium" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
                     </div>
 
                     <button type="submit" class="w-full py-5 bg-gradient-to-r from-neoBlue to-blue-600 rounded-xl font-bold text-xl text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1">
@@ -196,6 +196,45 @@
                         <i class="fa-solid fa-envelope text-neoBlue text-2xl"></i>
                         <span>clientes@neopunto.com</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs Section -->
+    <section id="faqs" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6 max-w-4xl" data-aos="fade-up">
+            <div class="text-center mb-16">
+                <span class="text-neoBlue font-bold tracking-wider uppercase text-sm">Soporte</span>
+                <h2 class="text-3xl md:text-5xl font-black mt-2 text-appleBlack">
+                    Preguntas <span class="text-neoYellow">Frecuentes</span>
+                </h2>
+                <p class="text-slate-500 mt-4 text-lg">Resuelve tus dudas sobre nuestros servicios de desarrollo y pagos.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="bg-appleGray p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-appleBlack mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-neoBlue"></i> ¿Cuánto tiempo toma desarrollar una app o sitio web?
+                    </h3>
+                    <p class="text-slate-600 ml-7">El tiempo varía según la complejidad del proyecto, pero generalmente toma entre 4 a 12 semanas desde el diseño hasta el lanzamiento final.</p>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-appleGray p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-appleBlack mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-credit-card text-neoBlue"></i> ¿Qué métodos de pago aceptan?
+                    </h3>
+                    <p class="text-slate-600 ml-7">Aceptamos pagos con tarjeta de crédito/débito y transferencias bancarias directas a través de Banrural y Banco Industrial.</p>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-appleGray p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-appleBlack mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-neoBlue"></i> ¿Ofrecen soporte después del lanzamiento?
+                    </h3>
+                    <p class="text-slate-600 ml-7">Sí, ofrecemos planes de mantenimiento y soporte continuo para asegurar que tu plataforma digital esté siempre actualizada y segura.</p>
                 </div>
             </div>
         </div>
