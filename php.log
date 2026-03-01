@@ -1,0 +1,16 @@
+[Sun Mar  1 18:39:09 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sun Mar  1 18:39:16 2026] [::1]:60522 Accepted
+[Sun Mar  1 18:39:16 2026] [::1]:60522 [200]: GET /index.php
+[Sun Mar  1 18:39:16 2026] [::1]:60522 Closing
+[Sun Mar  1 18:39:25 2026] [::1]:52260 Accepted
+[Sun Mar  1 18:39:25 2026] [::1]:52260 [200]: GET /privacidad.php
+[Sun Mar  1 18:39:25 2026] [::1]:52260 Closing
+[Sun Mar  1 18:39:32 2026] [::1]:52272 Accepted
+[Sun Mar  1 18:39:32 2026] [::1]:52272 [200]: GET /privacidad.php
+[Sun Mar  1 18:39:32 2026] [::1]:52272 Closing
+[Sun Mar  1 18:40:20 2026] [::1]:54762 Accepted
+[Sun Mar  1 18:40:20 2026] [::1]:54762 [200]: GET /index.php
+[Sun Mar  1 18:40:20 2026] [::1]:54762 Closing
+[Sun Mar  1 18:40:23 2026] [::1]:54766 Accepted
+[Sun Mar  1 18:40:23 2026] [::1]:54766 [200]: GET /privacidad.php
+[Sun Mar  1 18:40:23 2026] [::1]:54766 Closing
