@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeoPunto - Desarrollo Web & Apps</title>
+    <!-- SEO & Open Graph Meta Tags -->
+    <meta name="description" content="NeoPunto - Agencia de Desarrollo Web y Apps en Guatemala. Transformamos ideas complejas en experiencias digitales simples y poderosas.">
+    <meta property="og:title" content="NeoPunto - Desarrollo Web & Apps">
+    <meta property="og:description" content="Agencia de Desarrollo Web y Apps en Guatemala. Transformamos ideas complejas en experiencias digitales.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=NeoPunto">
+    <meta property="og:url" content="https://neopunto.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -15,7 +23,9 @@
             theme: {
                 extend: {
                     colors: {
-                        neoBlue: '#2563eb',
+                        appleBlack: '#1d1d1f',
+                        appleGray: '#f5f5f7',
+                        neoBlue: '#0066cc',
                         neoYellow: '#f59e0b',
                         neoDark: '#f8fafc',
                         neoGlass: 'rgba(255, 255, 255, 0.7)',
@@ -66,14 +76,11 @@
 <body class="antialiased">
 
     <!-- Fixed Header -->
-    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <header class="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-xl shadow-sm transition-all duration-300 border-b border-slate-100/50" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center relative z-50">
             <!-- Logo -->
-            <a href="index.php" class="text-2xl font-bold flex items-center gap-2 group">
-                <span class="text-neoBlue group-hover:rotate-12 transition-transform duration-300"><i class="fa-solid fa-code"></i></span>
-                <div>
-                    <span class="text-slate-900">Neo</span><span class="text-neoYellow">Punto</span>
-                </div>
+            <a href="index.php" class="flex items-center group">
+                <img src="https://via.placeholder.com/150x50?text=Logo" alt="NeoPunto Logo" class="h-8 md:h-10 w-auto object-contain">
             </a>
 
             <!-- Desktop Menu -->
