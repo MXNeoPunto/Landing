@@ -2,18 +2,59 @@
 require_once '../config/db.php';
 require_once '../includes/security.php';
 
+
 check_auth();
 
-if ($_SESSION['rol'] !== 'admin') {
+if (!in_array($_SESSION['rol'], ['admin', 'admin_principal', 'admin_secundario'])) {
     header('Location: cliente.php');
     exit();
 }
 
-$stmt = $pdo->query("SELECT id, username, email, pais, rol, creado_en FROM usuarios ORDER BY id DESC LIMIT 10");
+// Pagination & Filtering for Users
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
+
+$whereClauses = ["deleted_at IS NULL"];
+$params = [];
+
+if ($search) {
+    $whereClauses[] = "(username LIKE :search OR email LIKE :search OR pais LIKE :search)";
+    $params[':search'] = "%$search%";
+}
+
+if ($statusFilter) {
+    if ($statusFilter === 'con_servicios') {
+        $whereClauses[] = "id IN (SELECT DISTINCT usuario_id FROM cotizaciones WHERE estado NOT IN ('cancelado', 'finalizado'))";
+    } else {
+        $whereClauses[] = "estado = :status";
+        $params[':status'] = $statusFilter;
+    }
+}
+
+$whereSql = "WHERE " . implode(" AND ", $whereClauses);
+
+$countStmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios $whereSql");
+$countStmt->execute($params);
+$totalFilteredUsers = $countStmt->fetchColumn();
+
+$totalPages = ceil($totalFilteredUsers / $limit);
+
+$stmt = $pdo->prepare("SELECT id, username, email, pais, rol, estado, creado_en FROM usuarios $whereSql ORDER BY id DESC LIMIT :limit OFFSET :offset");
+foreach ($params as $key => $val) {
+    $stmt->bindValue($key, $val);
+}
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
 $users = $stmt->fetchAll();
 
-$totalStmt = $pdo->query("SELECT COUNT(*) FROM usuarios");
+$totalStmt = $pdo->query("SELECT COUNT(*) FROM usuarios WHERE deleted_at IS NULL");
 $totalUsers = $totalStmt->fetchColumn();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -83,11 +124,27 @@ $totalUsers = $totalStmt->fetchColumn();
         </div>
     </div>
 
+
     <!-- Users Table -->
     <div class="glass-card overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white">
-            <h2 class="text-lg font-semibold text-gray-800">Últimos Registros</h2>
-            <button class="text-sm text-neoBlue font-medium hover:underline">Ver todos</button>
+        <div class="px-6 py-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center bg-white gap-4">
+            <h2 class="text-lg font-semibold text-gray-800">Gestión de Usuarios</h2>
+
+            <form method="GET" class="flex flex-wrap gap-2 w-full sm:w-auto">
+                <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Buscar por nombre, email, país..." class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neoBlue w-full sm:w-auto">
+                <select name="status" class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-neoBlue w-full sm:w-auto">
+                    <option value="">Todos los estados</option>
+                    <option value="activo" <?php echo $statusFilter === 'activo' ? 'selected' : ''; ?>>Activo</option>
+                    <option value="suspendido" <?php echo $statusFilter === 'suspendido' ? 'selected' : ''; ?>>Suspendido</option>
+                    <option value="baneado" <?php echo $statusFilter === 'baneado' ? 'selected' : ''; ?>>Baneado</option>
+                    <option value="sin_verificar" <?php echo $statusFilter === 'sin_verificar' ? 'selected' : ''; ?>>Sin verificar</option>
+                    <option value="con_servicios" <?php echo $statusFilter === 'con_servicios' ? 'selected' : ''; ?>>Con servicios activos</option>
+                </select>
+                <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">Filtrar</button>
+                <?php if($search || $statusFilter): ?>
+                <a href="admin.php" class="text-red-500 hover:text-red-700 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">Limpiar</a>
+                <?php endif; ?>
+            </form>
         </div>
 
         <div class="overflow-x-auto">
@@ -99,7 +156,9 @@ $totalUsers = $totalStmt->fetchColumn();
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">País</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
@@ -113,24 +172,60 @@ $totalUsers = $totalStmt->fetchColumn();
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($u['email']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fa-solid fa-flag text-gray-300 mr-1"></i> <?php echo htmlspecialchars($u['pais']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <?php if($u['rol'] === 'admin'): ?>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Admin</span>
-                                <?php else: ?>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Cliente</span>
-                                <?php endif; ?>
+                                <?php
+                                $roleClass = 'bg-gray-100 text-gray-800';
+                                if ($u['rol'] === 'admin' || $u['rol'] === 'admin_principal') $roleClass = 'bg-purple-100 text-purple-800';
+                                if ($u['rol'] === 'soporte') $roleClass = 'bg-blue-100 text-blue-800';
+                                ?>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?php echo $roleClass; ?>">
+                                    <?php echo ucfirst(str_replace('_', ' ', $u['rol'])); ?>
+                                </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo date('d/m/Y', strtotime($u['creado_en'])); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <?php
+                                $statusClass = 'bg-green-100 text-green-800';
+                                if ($u['estado'] === 'suspendido') $statusClass = 'bg-yellow-100 text-yellow-800';
+                                if ($u['estado'] === 'baneado') $statusClass = 'bg-red-100 text-red-800';
+                                if ($u['estado'] === 'sin_verificar') $statusClass = 'bg-gray-100 text-gray-800';
+                                ?>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?php echo $statusClass; ?>">
+                                    <?php echo ucfirst(str_replace('_', ' ', $u['estado'] ?? 'activo')); ?>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <?php echo date('d/m/Y', strtotime($u['creado_en'])); ?>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="admin_user.php?id=<?php echo $u['id']; ?>" class="text-neoBlue hover:text-blue-900 bg-blue-50 px-3 py-1.5 rounded-full"><i class="fa-solid fa-eye mr-1"></i> Ver</a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">No hay usuarios registrados.</td>
+                            <td colspan="8" class="px-6 py-10 text-center text-sm text-gray-500">No hay usuarios que coincidan con la búsqueda.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
+
+        <?php if ($totalPages > 1): ?>
+        <div class="px-6 py-4 border-t border-gray-100 bg-white flex items-center justify-between">
+            <div class="text-sm text-gray-500">
+                Mostrando página <?php echo $page; ?> de <?php echo $totalPages; ?>
+            </div>
+            <div class="flex gap-1">
+                <?php if ($page > 1): ?>
+                    <a href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>" class="px-3 py-1 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Anterior</a>
+                <?php endif; ?>
+                <?php if ($page < $totalPages): ?>
+                    <a href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>" class="px-3 py-1 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Siguiente</a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
+
     <!-- General Settings Form -->
     <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
@@ -215,7 +310,56 @@ $totalUsers = $totalStmt->fetchColumn();
     <!-- Payment Methods Config -->
     <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
-            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-credit-card text-neoBlue mr-2"></i> Métodos de Pago</h2>
+
+    <!-- Cloudflare R2 Settings -->
+    <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
+            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-brands fa-cloudflare text-[#F38020] mr-2"></i> Configuración Cloudflare R2 (Almacenamiento)</h2>
+        </div>
+        <div class="p-6">
+            <?php
+            $r2Config = $pdo->query("SELECT r2_access_key, r2_secret_key, r2_endpoint, r2_bucket, r2_public_url FROM config_general WHERE id = 1")->fetch();
+            ?>
+            <form action="../controllers/SettingsController.php" method="POST" class="space-y-6">
+                <input type="hidden" name="action" value="update_r2">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Access Key ID</label>
+                        <input type="text" name="r2_access_key" value="<?php echo htmlspecialchars($r2Config['r2_access_key'] ?? ''); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Secret Access Key</label>
+                        <input type="password" name="r2_secret_key" value="<?php echo htmlspecialchars($r2Config['r2_secret_key'] ?? ''); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Endpoint URL (S3 API)</label>
+                        <input type="url" name="r2_endpoint" value="<?php echo htmlspecialchars($r2Config['r2_endpoint'] ?? ''); ?>" placeholder="https://<account_id>.r2.cloudflarestorage.com" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre del Bucket</label>
+                        <input type="text" name="r2_bucket" value="<?php echo htmlspecialchars($r2Config['r2_bucket'] ?? ''); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">URL Pública / Custom Domain (opcional)</label>
+                        <input type="url" name="r2_public_url" value="<?php echo htmlspecialchars($r2Config['r2_public_url'] ?? ''); ?>" placeholder="https://cdn.tusitio.com" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50">
+                        <p class="mt-1 text-xs text-gray-500">Deja esto en blanco si tus archivos no son públicos, o usa el dominio de R2.</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                    <a href="archivos.php" class="text-sm font-medium text-neoBlue hover:underline"><i class="fa-solid fa-folder-open mr-1"></i> Gestionar Archivos Cloudflare R2</a>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-blue-700 transition shadow-md shadow-blue-500/30">
+                        <i class="fa-solid fa-save mr-2"></i> Guardar Configuración R2
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+<h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-credit-card text-neoBlue mr-2"></i> Métodos de Pago</h2>
         </div>
         <div class="p-6">
             <form action="../controllers/PaymentsController.php" method="POST" class="space-y-6">

@@ -1,4 +1,28 @@
-[Mon Mar  2 00:08:37 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
-[Mon Mar  2 00:08:39 2026] [::1]:57182 Accepted
-[Mon Mar  2 00:08:39 2026] [::1]:57182 [200]: HEAD /index.php
-[Mon Mar  2 00:08:39 2026] [::1]:57182 Closing
+[Mon Mar  2 03:33:28 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Mon Mar  2 03:33:31 2026] [::1]:59186 Accepted
+[Mon Mar  2 03:33:31 2026] [::1]:59186 [200]: GET /panel/admin.php
+[Mon Mar  2 03:33:31 2026] [::1]:59186 Closing
+[Mon Mar  2 03:33:33 2026] [::1]:59202 Accepted
+[Mon Mar  2 03:33:33 2026] [::1]:59202 [302]: GET /panel/archivos.php
+[Mon Mar  2 03:33:33 2026] [::1]:59202 Closing
+[Mon Mar  2 03:33:33 2026] [::1]:59216 Accepted
+[Mon Mar  2 03:33:33 2026] [::1]:59216 [200]: GET /panel/admin.php
+[Mon Mar  2 03:33:33 2026] [::1]:59216 Closing
+[Mon Mar  2 03:34:48 2026] [::1]:37024 Accepted
+[Mon Mar  2 03:34:48 2026] [::1]:37024 [200]: GET /panel/admin.php
+[Mon Mar  2 03:34:48 2026] [::1]:37024 Closing
+[Mon Mar  2 03:34:49 2026] [::1]:37026 Accepted
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 59
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 69
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 87
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 91
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 95
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 99
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 240
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 245
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 295
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 299
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 303
+[Mon Mar  2 03:34:49 2026] PHP Warning:  Trying to access array offset on false in /app/panel/cliente.php on line 307
+[Mon Mar  2 03:34:49 2026] [::1]:37026 [200]: GET /panel/cliente.php
+[Mon Mar  2 03:34:49 2026] [::1]:37026 Closing

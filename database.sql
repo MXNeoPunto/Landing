@@ -9,8 +9,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
     pais VARCHAR(100) NOT NULL,
     moneda VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('cliente', 'admin') DEFAULT 'cliente',
-    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    rol ENUM('cliente', 'admin', 'admin_principal', 'admin_secundario', 'soporte') DEFAULT 'cliente',
+    estado ENUM('activo', 'suspendido', 'baneado', 'sin_verificar') DEFAULT 'activo',
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS password_resets (
@@ -39,7 +41,15 @@ CREATE TABLE IF NOT EXISTS config_general (
     footer_social_facebook VARCHAR(255),
     footer_social_instagram VARCHAR(255),
     footer_whatsapp VARCHAR(20),
-    footer_copyright VARCHAR(255)
+    footer_copyright VARCHAR(255),
+    mantenimiento BOOLEAN DEFAULT FALSE,
+    zona_horaria VARCHAR(100) DEFAULT 'America/Guatemala',
+    version_sistema VARCHAR(20) DEFAULT '1.0.0',
+    r2_access_key VARCHAR(255),
+    r2_secret_key VARCHAR(255),
+    r2_endpoint VARCHAR(255),
+    r2_bucket VARCHAR(255),
+    r2_public_url VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS metodos_pago (

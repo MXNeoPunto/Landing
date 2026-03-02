@@ -72,9 +72,14 @@ $user = $stmt->fetch();
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <!-- User Info Card -->
-        <div class="glass-card p-6 md:col-span-2">
-            <h2 class="text-lg font-semibold border-b border-gray-100 pb-4 mb-4"><i class="fa-regular fa-address-card text-neoBlue mr-2"></i> Información de la Cuenta</h2>
+                        <!-- User Info Card -->
+        <div class="glass-card p-6 md:col-span-2 relative group">
+            <h2 class="text-lg font-semibold border-b border-gray-100 pb-4 mb-4 flex justify-between items-center">
+                <span><i class="fa-regular fa-address-card text-neoBlue mr-2"></i> Información de la Cuenta</span>
+                <button onclick="document.getElementById('editProfileModal').classList.remove('hidden')" class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-full text-gray-700 font-medium transition-colors">
+                    <i class="fa-solid fa-pen text-xs mr-1"></i> Editar
+                </button>
+            </h2>
 
             <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
                 <div>
@@ -86,18 +91,12 @@ $user = $stmt->fetch();
                     <dd class="mt-1 text-base text-gray-900"><?php echo htmlspecialchars($user['telefono']); ?></dd>
                 </div>
                 <div>
-                    <dt class="text-sm font-medium text-gray-500">País</dt>
-                    <dd class="mt-1 text-base text-gray-900"><i class="fa-solid fa-earth-americas text-gray-400 mr-1"></i> <?php echo htmlspecialchars($user['pais']); ?></dd>
+                    <dt class="text-sm font-medium text-gray-500">Ubicación</dt>
+                    <dd class="mt-1 text-base text-gray-900"><i class="fa-solid fa-globe text-gray-400 mr-1"></i> <?php echo htmlspecialchars($user['pais']); ?></dd>
                 </div>
                 <div>
-                    <dt class="text-sm font-medium text-gray-500">Moneda Asignada</dt>
-                    <dd class="mt-1 text-base font-medium <?php echo $user['moneda'] === 'Quetzal' ? 'text-green-600' : 'text-blue-600'; ?>">
-                        <i class="fa-solid fa-coins mr-1"></i> <?php echo htmlspecialchars($user['moneda']); ?>
-                    </dd>
-                </div>
-                <div>
-                    <dt class="text-sm font-medium text-gray-500">Miembro desde</dt>
-                    <dd class="mt-1 text-sm text-gray-600"><?php echo date('d M Y', strtotime($user['creado_en'])); ?></dd>
+                    <dt class="text-sm font-medium text-gray-500">Moneda Preferida</dt>
+                    <dd class="mt-1 text-base text-gray-900"><span class="px-2 py-1 bg-gray-100 rounded text-sm"><?php echo htmlspecialchars($user['moneda']); ?></span></dd>
                 </div>
             </dl>
         </div>
@@ -278,5 +277,43 @@ $user = $stmt->fetch();
         return false;
     }
 </script>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center backdrop-blur-sm p-4">
+        <div class="glass-card w-full max-w-md p-6 relative bg-white rounded-2xl shadow-2xl">
+            <button onclick="document.getElementById('editProfileModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-semibold mb-4 text-appleBlack"><i class="fa-solid fa-user-pen text-neoBlue mr-2"></i> Editar Perfil</h3>
+
+            <form action="../controllers/UserController.php" method="POST" class="space-y-4">
+                <input type="hidden" name="action" value="update_self">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre de Usuario</label>
+                    <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                    <input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="text" name="telefono" value="<?php echo htmlspecialchars($user['telefono']); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">País</label>
+                    <input type="text" name="pais" value="<?php echo htmlspecialchars($user['pais']); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-gray-50" required>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="document.getElementById('editProfileModal').classList.add('hidden')" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-200 transition">Cancelar</button>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700 transition shadow-md shadow-blue-500/30">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

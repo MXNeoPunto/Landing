@@ -14,6 +14,70 @@ if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_r2') {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        http_response_code(403);
+        exit("Token de seguridad inválido.");
+    }
+
+    $access = trim($_POST['r2_access_key'] ?? '');
+    $secret = trim($_POST['r2_secret_key'] ?? '');
+    $endpoint = trim($_POST['r2_endpoint'] ?? '');
+    $bucket = trim($_POST['r2_bucket'] ?? '');
+    $public_url = trim($_POST['r2_public_url'] ?? '');
+
+    try {
+        $sql = "UPDATE config_general SET
+                r2_access_key = ?,
+                r2_secret_key = ?,
+                r2_endpoint = ?,
+                r2_bucket = ?,
+                r2_public_url = ?
+                WHERE id = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$access, $secret, $endpoint, $bucket, $public_url]);
+
+        $_SESSION['success_msg'] = "Configuración R2 guardada correctamente.";
+    } catch (\PDOException $e) {
+        $_SESSION['error_msg'] = "Error al guardar R2: " . $e->getMessage();
+    }
+    header('Location: ../panel/admin.php');
+    exit();
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_r2') {
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        http_response_code(403);
+        exit("Token de seguridad inválido.");
+    }
+
+    $access = trim($_POST['r2_access_key'] ?? '');
+    $secret = trim($_POST['r2_secret_key'] ?? '');
+    $endpoint = trim($_POST['r2_endpoint'] ?? '');
+    $bucket = trim($_POST['r2_bucket'] ?? '');
+    $public_url = trim($_POST['r2_public_url'] ?? '');
+
+    try {
+        $sql = "UPDATE config_general SET
+                r2_access_key = ?,
+                r2_secret_key = ?,
+                r2_endpoint = ?,
+                r2_bucket = ?,
+                r2_public_url = ?
+                WHERE id = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$access, $secret, $endpoint, $bucket, $public_url]);
+
+        $_SESSION['success_msg'] = "Configuración R2 guardada correctamente.";
+    } catch (\PDOException $e) {
+        $_SESSION['error_msg'] = "Error al guardar R2: " . $e->getMessage();
+    }
+    header('Location: ../panel/admin.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_general') {
     if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         http_response_code(403);
