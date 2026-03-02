@@ -133,7 +133,150 @@ $user = $stmt->fetch();
             </button>
         </div>
     </div>
+    <!-- Request Service Form -->
+    <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
+            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-paper-plane text-neoBlue mr-2"></i> Solicitar Servicio / Cotización</h2>
+        </div>
+        <div class="p-6">
+            <form action="../controllers/QuotesController.php" method="POST" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                <input type="hidden" name="action" value="create_quote">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Seleccionar Servicio</label>
+                    <select name="servicio_id" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70">
+                                                <?php
+                        $servicios = $pdo->query("SELECT id, nombre, tipo FROM servicios WHERE estado = 'activo'")->fetchAll();
+                        foreach($servicios as $s):
+                        ?>
+                        <option value="<?php echo $s['id']; ?>"><?php echo htmlspecialchars($s['nombre'] . ' (' . ucfirst(str_replace('_', ' ', $s['tipo'])) . ')'); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Cuéntanos sobre tu proyecto</label>
+                    <textarea name="descripcion" rows="4" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70" placeholder="Describe los requisitos..."></textarea>
+                </div>
+                <button type="submit" class="bg-neoBlue text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition shadow-md shadow-blue-500/30">
+                    Enviar Solicitud
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- My Services / Status -->
+    <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
+            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-list-check text-neoBlue mr-2"></i> Mis Proyectos y Pagos</h2>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50 rounded-t-xl">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Servicio</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                                        <?php
+                    $cotizaciones = $pdo->prepare("SELECT c.*, s.nombre AS servicio_nombre, f.ruta_pdf FROM cotizaciones c LEFT JOIN servicios s ON c.servicio_id = s.id LEFT JOIN facturas f ON c.id = f.cotizacion_id WHERE c.usuario_id = ? ORDER BY c.id DESC");
+                    $cotizaciones->execute([$_SESSION['user_id']]);
+                    foreach($cotizaciones->fetchAll() as $c):
+                    ?>
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo htmlspecialchars($c['servicio_nombre'] ?? 'Otro'); ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"><?php echo ucfirst(str_replace('_', ' ', $c['estado'])); ?></span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <?php echo $c['moneda'] . ' ' . ($c['precio_final'] ?? '0.00'); ?>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="ticket.php?id=<?php echo $c['id']; ?>" class="text-neoBlue hover:text-blue-900 mr-3"><i class="fa-solid fa-comments"></i> Chat</a>
+
+                            <?php
+                                $horas = (time() - strtotime($c['creado_en'])) / 3600;
+                                if ($horas >= 2 && !in_array($c['estado'], ['finalizado', 'cancelado'])):
+                            ?>
+                            <form action="../controllers/QuotesController.php" method="POST" class="inline-block" onsubmit="return handleEditRequest(this);">
+                                <input type="hidden" name="action" value="request_edit">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                                <input type="hidden" name="cotizacion_id" value="<?php echo $c['id']; ?>">
+                                <input type="hidden" name="motivo" class="motivo-input" value="">
+                                <button type="submit" class="text-orange-500 hover:text-orange-700 mr-3 text-xs border border-orange-500 px-2 py-1 rounded-full"><i class="fa-solid fa-pen-to-square"></i> Solicitar Edición</button>
+                            </form>
+                            <?php endif; ?>
+
+                            <?php if ($c['estado'] === 'aprobado' || $c['estado'] === 'en_proceso'): ?>
+                            <a href="#pagos" onclick="document.getElementById('cotizacion_id_factura').value = <?php echo $c['id']; ?>" class="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs hover:bg-green-600 shadow-sm"><i class="fa-solid fa-credit-card"></i> Pagar / Facturar</a>
+                            <?php endif; ?>
+
+                            <?php if (!empty($c['ruta_pdf'])): ?>
+                            <a href="../<?php echo htmlspecialchars($c['ruta_pdf']); ?>" target="_blank" class="bg-neoBlue text-white px-3 py-1.5 rounded-full text-xs hover:bg-blue-700 shadow-sm ml-2"><i class="fa-solid fa-download"></i> Factura PDF</a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+</tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Invoicing Form -->
+    <div id="pagos" class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
+            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-file-invoice-dollar text-neoBlue mr-2"></i> Datos de Facturación</h2>
+        </div>
+        <div class="p-6">
+            <form action="../controllers/InvoiceController.php" method="POST" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                <input type="hidden" name="action" value="request_invoice">
+                <input type="hidden" name="cotizacion_id" id="cotizacion_id_factura" value="">
+<!-- Dynamic in real app -->
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre Legal / Razón Social</label>
+                        <input type="text" name="nombre_legal" value="<?php echo htmlspecialchars($user['username']); ?>" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Tipo de Identificación</label>
+                        <select name="tipo_identificacion" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70" required>
+                            <?php if($user['pais'] === 'Guatemala'): ?>
+                                <option value="NIT">NIT</option>
+                                <option value="Consumidor Final">Consumidor Final (CF)</option>
+                            <?php else: ?>
+                                <option value="Tax ID">Identificación Fiscal Local (Tax ID)</option>
+                                <option value="Consumidor Final">Consumidor Final</option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Número de Identificación (Si aplica)</label>
+                        <input type="text" name="identificacion_numero" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-200">
+                    <button type="submit" class="w-full bg-gray-800 text-white px-6 py-2 rounded-full font-medium hover:bg-black transition shadow-md shadow-gray-500/30">
+                        Solicitar Factura
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 
+<script>
+    function handleEditRequest(form) {
+        let motivo = prompt('Motivo de la edición (Requiere aprobación del admin):');
+        if (motivo !== null && motivo.trim() !== '') {
+            form.querySelector('.motivo-input').value = motivo;
+            return true;
+        }
+        return false;
+    }
+</script>
 </body>
 </html>
