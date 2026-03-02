@@ -137,6 +137,31 @@ $csrf_token = generate_csrf_token();
             <button type="submit" class="btn-apple mt-4">Iniciar Sesión</button>
         </div>
     </form>
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white/70 text-gray-500 rounded-full">O continúa con</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <div>
+                        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://neopunto.com/controllers/AuthController.php?action=oauth_google&response_type=code&scope=email profile" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 backdrop-blur-md transition">
+                            <span class="sr-only">Sign in with Google</span>
+                            <i class="fa-brands fa-google text-red-500 text-lg"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://neopunto.com/controllers/AuthController.php?action=oauth_google&response_type=code&scope=email profile" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 backdrop-blur-md transition">
+                            <span class="sr-only">Sign in with Facebook</span>
+                            <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
     <div class="text-center mt-6 text-sm text-gray-500">
         ¿No tienes cuenta? <a href="registro.php" class="text-neoBlue hover:underline font-medium">Crea una ahora</a>
