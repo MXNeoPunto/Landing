@@ -67,7 +67,7 @@ $activities = $activityStmt->fetchAll();
     </div>
 </nav>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32 md:pt-8 space-y-8">
     <?php if(isset($_SESSION['success_msg'])): ?>
         <div class="bg-green-50 border border-green-200 text-green-800 rounded-xl p-4 flex items-center">
             <i class="fa-solid fa-check-circle mr-2"></i> <?php echo $_SESSION['success_msg']; unset($_SESSION['success_msg']); ?>

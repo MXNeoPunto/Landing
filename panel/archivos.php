@@ -142,7 +142,7 @@ try {
     </div>
 </nav>
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32 md:pt-8 space-y-6">
 
     <?php if($error): ?>
         <div class="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 flex items-center shadow-sm">
