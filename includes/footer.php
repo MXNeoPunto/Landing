@@ -1,29 +1,30 @@
 <!-- Footer -->
-    <footer class="bg-white text-appleBlack py-12 relative z-10">
+    <footer class="bg-slate-50 text-appleBlack py-16 relative z-10">
         <div class="container mx-auto px-6">
 
             <!-- Payment Banner -->
-            <div class="bg-appleGray rounded-3xl p-8 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+            <div class="bg-appleBlack text-white rounded-[2rem] p-8 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md border border-slate-800">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-neoBlue shadow-sm text-xl">
+                    <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white shadow-sm text-xl backdrop-blur-md">
                         <i class="fa-solid fa-shield-check"></i>
                     </div>
                     <div>
-                        <h4 class="text-lg font-bold text-appleBlack">Pagos Seguros</h4>
-                        <p class="text-slate-500 text-sm">Aceptamos pagos con tarjeta, transferencia bancaria de Banrural y Banco Industrial.</p>
+                        <h4 class="text-lg font-bold text-white">Pagos Seguros</h4>
+                        <p class="text-slate-400 text-sm">Aceptamos TiloPay, y transferencia bancaria de Banrural y Banco Industrial.</p>
                     </div>
                 </div>
-                <div class="flex gap-4 text-3xl text-slate-400">
-                    <i class="fa-brands fa-cc-visa hover:text-neoBlue transition-colors"></i>
-                    <i class="fa-brands fa-cc-mastercard hover:text-neoBlue transition-colors"></i>
-                    <i class="fa-solid fa-building-columns hover:text-neoBlue transition-colors"></i>
+                <div class="flex gap-4 text-3xl text-slate-500">
+                    <i class="fa-brands fa-cc-visa hover:text-white transition-colors"></i>
+                    <i class="fa-brands fa-cc-mastercard hover:text-white transition-colors"></i>
+                    <i class="fa-solid fa-money-bill-wave hover:text-white transition-colors"></i>
+                    <i class="fa-solid fa-building-columns hover:text-white transition-colors"></i>
                 </div>
             </div>
 
             <!-- Main Footer Links -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <!-- Brand -->
-                <div class="col-span-1 bg-appleGray rounded-3xl p-8 shadow-sm">
+                <div class="col-span-1 bg-white rounded-[2rem] p-8 shadow-sm">
                     <a href="index.php" class="flex items-center mb-6">
                         <img src="https://via.placeholder.com/150x50?text=Logo" alt="NeoPunto Logo" class="h-8 md:h-10 w-auto object-contain">
                     </a>
@@ -44,7 +45,7 @@
                 </div>
 
                 <!-- Links -->
-                <div class="bg-appleGray rounded-3xl p-8 shadow-sm">
+                <div class="bg-white rounded-[2rem] p-8 shadow-sm">
                     <h4 class="text-lg font-bold mb-6 text-appleBlack">Navegación</h4>
                     <ul class="space-y-3 text-slate-500 text-sm">
                         <li><a href="index.php#inicio" class="hover:text-neoBlue transition-colors flex items-center gap-2"><i class="fa-solid fa-circle text-[8px]"></i> Inicio</a></li>
@@ -56,7 +57,7 @@
                 </div>
 
                 <!-- Legal -->
-                <div class="bg-appleGray rounded-3xl p-8 shadow-sm">
+                <div class="bg-white rounded-[2rem] p-8 shadow-sm">
                     <h4 class="text-lg font-bold mb-6 text-appleBlack">Legal</h4>
                     <ul class="space-y-3 text-slate-500 text-sm">
                         <li><a href="terminos.php" class="hover:text-neoBlue transition-colors">Términos de Uso</a></li>
@@ -68,7 +69,7 @@
                 </div>
 
                 <!-- Contact Info -->
-                <div class="bg-appleGray rounded-3xl p-8 shadow-sm">
+                <div class="bg-white rounded-[2rem] p-8 shadow-sm">
                      <h4 class="text-lg font-bold mb-6 text-appleBlack">Contacto Directo</h4>
                      <ul class="space-y-4 text-slate-500 text-sm">
                         <li class="flex items-start gap-3">
@@ -80,7 +81,7 @@
                             <span>clientes@neopunto.com<br><span class="text-xs text-slate-400">Respuesta en 24h</span></span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-location-dot text-neoYellow mt-1"></i>
+                            <i class="fa-solid fa-location-dot text-neoBlue mt-1"></i>
                             <span>Guatemala, Guatemala<br><span class="text-xs text-slate-400">Oficinas Centrales</span></span>
                         </li>
                      </ul>
@@ -88,7 +89,7 @@
             </div>
 
             <!-- Bottom Copyright -->
-            <div class="bg-appleGray rounded-full px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 shadow-sm">
+            <div class="bg-white rounded-full px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 shadow-sm border border-slate-100">
                 <div>
                     &copy; <?php echo date('Y'); ?> NeoPunto. Todos los derechos reservados.
                 </div>

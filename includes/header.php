@@ -138,10 +138,17 @@ $user_role = $_SESSION['rol'] ?? 'cliente';
     </header>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
+    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white/80 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
+
+        <div class="absolute top-6 right-6">
+            <button id="close-menu-btn" class="w-10 h-10 flex flex-col justify-center items-center text-slate-900 focus:outline-none group">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+
         <!-- Decorative Background Elements -->
-        <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-neoBlue/10 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-neoBlue/10 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
         <div class="min-h-screen flex flex-col px-8 pb-8 pt-28">
 

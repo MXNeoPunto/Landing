@@ -92,6 +92,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
+    elseif ($_POST['action'] === 'verify_payment' && isset($_POST['factura_id']) && isset($_POST['estado'])) {
+        try {
+            $estado = in_array($_POST['estado'], ['pagado', 'fallido']) ? $_POST['estado'] : 'en_revision';
+            $stmt = $pdo->prepare("UPDATE facturas SET estado_pago = ? WHERE id = ?");
+            $stmt->execute([$estado, $_POST['factura_id']]);
+            $_SESSION['success_msg'] = "Pago " . ($estado === 'pagado' ? "aprobado" : "rechazado") . " correctamente.";
+        } catch (\PDOException $e) {
+            $_SESSION['error_msg'] = "Error al verificar pago: " . $e->getMessage();
+        }
+    }
+
     if (php_sapi_name() !== 'cli') {
         header('Location: ../panel/admin.php');
         exit();
