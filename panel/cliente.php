@@ -228,11 +228,11 @@ $user = $stmt->fetch();
             <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-file-invoice-dollar text-neoBlue mr-2"></i> Datos de Facturación</h2>
         </div>
         <div class="p-6">
-            <form action="../controllers/InvoiceController.php" method="POST" class="space-y-4">
+            <form action="../controllers/InvoiceController.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
                 <input type="hidden" name="action" value="request_invoice">
                 <input type="hidden" name="cotizacion_id" id="cotizacion_id_factura" value="">
-<!-- Dynamic in real app -->
+                <!-- Dynamic in real app -->
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -255,11 +255,30 @@ $user = $stmt->fetch();
                         <label class="block text-sm font-medium text-gray-700">Número de Identificación (Si aplica)</label>
                         <input type="text" name="identificacion_numero" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70">
                     </div>
+
+                    <div class="md:col-span-2 border-t border-gray-200 pt-4 mt-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Método de Pago</label>
+                        <select name="metodo_pago_id" id="metodo_pago_id" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-neoBlue focus:ring-neoBlue sm:text-sm px-4 py-2 bg-white/70" required onchange="toggleComprobante()">
+                            <option value="">Selecciona un método de pago...</option>
+                            <?php
+                            $metodos = $pdo->query("SELECT id, nombre, tipo FROM metodos_pago WHERE estado = 'activo'")->fetchAll();
+                            foreach($metodos as $m):
+                            ?>
+                                <option value="<?php echo $m['id']; ?>" data-tipo="<?php echo $m['tipo']; ?>"><?php echo htmlspecialchars($m['nombre']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div id="comprobante_div" class="md:col-span-2 hidden bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700">Comprobante de Transferencia</label>
+                        <p class="text-xs text-gray-500 mb-2">Por favor, sube una imagen o PDF de la boleta de pago.</p>
+                        <input type="file" name="comprobante" id="comprobante" accept="image/*,.pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
                 </div>
 
                 <div class="pt-4 border-t border-gray-200">
                     <button type="submit" class="w-full bg-gray-800 text-white px-6 py-2 rounded-full font-medium hover:bg-black transition shadow-md shadow-gray-500/30">
-                        Solicitar Factura
+                        Pagar y Solicitar Factura
                     </button>
                 </div>
             </form>
@@ -275,6 +294,22 @@ $user = $stmt->fetch();
             return true;
         }
         return false;
+    }
+
+    function toggleComprobante() {
+        const select = document.getElementById('metodo_pago_id');
+        const selectedOption = select.options[select.selectedIndex];
+        const tipo = selectedOption.getAttribute('data-tipo');
+        const compDiv = document.getElementById('comprobante_div');
+        const compInput = document.getElementById('comprobante');
+
+        if (tipo === 'transferencia') {
+            compDiv.classList.remove('hidden');
+            compInput.required = true;
+        } else {
+            compDiv.classList.add('hidden');
+            compInput.required = false;
+        }
     }
 </script>
 

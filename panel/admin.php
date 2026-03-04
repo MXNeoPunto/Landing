@@ -655,6 +655,62 @@ $totalUsers = $totalStmt->fetchColumn();
             </table>
         </div>
     </div>
+    <!-- Admin Verifications -->
+    <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
+            <h2 class="text-xl font-semibold text-gray-800"><i class="fa-solid fa-search-dollar text-neoBlue mr-2"></i> Pagos en Revisión (Transferencias)</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50 rounded-t-xl">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Factura ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente/Empresa</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Método</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                    <?php
+                    $pagos_revision = $pdo->query("SELECT f.*, mp.nombre as metodo_nombre, u.username FROM facturas f JOIN metodos_pago mp ON f.metodo_pago_id = mp.id JOIN usuarios u ON f.usuario_id = u.id WHERE f.estado_pago = 'en_revision'")->fetchAll();
+                    foreach($pagos_revision as $p):
+                    ?>
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">#F-<?php echo $p['id']; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo htmlspecialchars($p['nombre_legal'] . ' (' . $p['username'] . ')'); ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($p['metodo_nombre']); ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo htmlspecialchars($p['moneda'] . ' ' . $p['monto_total']); ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2 items-center">
+                            <?php if ($p['comprobante_ruta']): ?>
+                            <a href="../<?php echo htmlspecialchars($p['comprobante_ruta']); ?>" target="_blank" class="text-neoBlue hover:underline text-xs mr-2"><i class="fa-solid fa-eye"></i> Ver Boleta</a>
+                            <?php endif; ?>
+                            <form action="../controllers/PaymentsController.php" method="POST" class="inline">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                                <input type="hidden" name="action" value="verify_payment">
+                                <input type="hidden" name="factura_id" value="<?php echo $p['id']; ?>">
+                                <input type="hidden" name="estado" value="pagado">
+                                <button type="submit" class="bg-green-500 text-white px-3 py-1.5 rounded-full text-xs hover:bg-green-600 shadow-sm"><i class="fa-solid fa-check"></i> Aprobar</button>
+                            </form>
+                            <form action="../controllers/PaymentsController.php" method="POST" class="inline">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generate_csrf_token()); ?>">
+                                <input type="hidden" name="action" value="verify_payment">
+                                <input type="hidden" name="factura_id" value="<?php echo $p['id']; ?>">
+                                <input type="hidden" name="estado" value="fallido">
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1.5 rounded-full text-xs hover:bg-red-600 shadow-sm"><i class="fa-solid fa-xmark"></i> Rechazar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php if (empty($pagos_revision)): ?>
+                        <tr><td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No hay pagos pendientes de revisión.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Invoice Requests -->
     <div class="glass-card overflow-hidden mt-8 backdrop-blur-md bg-white/50 rounded-3xl shadow-lg">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white/80">
