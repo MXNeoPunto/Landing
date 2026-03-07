@@ -61,7 +61,8 @@
                     <h4 class="text-lg font-bold mb-6 text-appleBlack">Legal</h4>
                     <ul class="space-y-3 text-slate-500 text-sm">
                         <li><a href="terminos.php" class="hover:text-neoBlue transition-colors">Términos de Uso</a></li>
-                        <li><a href="privacidad.php" class="hover:text-neoBlue transition-colors">Política de Privacidad</a></li>
+                        <li><a href="politica-de-privacidad.php" class="hover:text-neoBlue transition-colors">Política de Privacidad</a></li>
+                        <li><a href="eliminacion_datos.php" class="hover:text-neoBlue transition-colors">Eliminación de Datos</a></li>
                         <li><a href="cookies.php" class="hover:text-neoBlue transition-colors">Política de Cookies</a></li>
                         <li><a href="anuncios.php" class="hover:text-neoBlue transition-colors">Política de Anuncios</a></li>
                         <li><a href="politica_correos.php" class="hover:text-neoBlue transition-colors">Política de Correos</a></li>

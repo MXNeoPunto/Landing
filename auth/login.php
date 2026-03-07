@@ -147,6 +147,8 @@ $csrf_token = generate_csrf_token();
                     </div>
                 </div>
 
+                <p class="text-xs text-center text-gray-500 mt-2 mb-4">(Solo se puede iniciar o conectar redes sociales si ya creó una cuenta)</p>
+
                 <div class="mt-6 grid grid-cols-2 gap-3">
                     <div>
                         <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://neopunto.com/controllers/AuthController.php?action=oauth_google&response_type=code&scope=email profile" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 backdrop-blur-md transition">
@@ -155,7 +157,7 @@ $csrf_token = generate_csrf_token();
                         </a>
                     </div>
                     <div>
-                        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://neopunto.com/controllers/AuthController.php?action=oauth_google&response_type=code&scope=email profile" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 backdrop-blur-md transition">
+                        <a href="https://www.facebook.com/v19.0/dialog/oauth?client_id=YOUR_FACEBOOK_APP_ID&redirect_uri=https://neopunto.com/controllers/AuthController.php?action=oauth_facebook&scope=email,public_profile" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 backdrop-blur-md transition">
                             <span class="sr-only">Sign in with Facebook</span>
                             <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
                         </a>
