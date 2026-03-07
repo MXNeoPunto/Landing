@@ -56,6 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
+    // OAuth: Facebook Callback Stub
+    if ((isset($_GET['action']) && $_GET['action'] === 'oauth_facebook') || (isset($_POST['action']) && $_POST['action'] === 'oauth_facebook') || (isset($_GET['code']) && isset($_GET['state']))) { // Facebook uses state sometimes, keeping it simple for stub
+        $code = $_GET['code'] ?? null;
+        if ($code) {
+            // Ejemplo de llamada a la API de Facebook Graph para intercambiar código por token:
+            // \$token_url = "https://graph.facebook.com/v19.0/oauth/access_token?client_id=APP_ID&redirect_uri=URI&client_secret=APP_SECRET&code=" . $code;
+            // \$response = file_get_contents(\$token_url);
+
+            $_SESSION['error_msg'] = "La autenticación de Facebook no está configurada.";
+
+            if (php_sapi_name() !== 'cli') {
+                header('Location: ../panel/cliente.php');
+                exit();
+            }
+        }
+    }
+
     // OAuth: Google Callback Stub
     if ((isset($_POST['action']) && $_POST['action'] === 'oauth_google') || isset($_GET['code'])) {
         // En una app real, aquí se verifica el estado (CSRF),
